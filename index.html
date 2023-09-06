@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>여행지 추천</title>
+  <link rel="stylesheet" href="./CSS.css">
+</head>
+
+<body>
+	<header class="header">
+		<div class="wrap">
+			<div class="image">
+				<img src="./img/tree.png" alt="tree"/>
+			</div>
+			<div class="title">
+				<h1>여행지 추천</h1>
+			</div>
+		</div>
+	</header>
+
+	<main class="main">
+		<h2>여행 일정</h2>
+	<form>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th><label for="TP">여행 목적</label></th>
+					<td class="tal">
+						<select name="TP" id="TP">
+							<option value="purpose1" selected>관광</option>
+							<option value="purpose2">휴양</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="HL">여행 기간</label></th>
+					<td class="tal">
+						<select name="HL" id="HL">
+							<option value="1day_2nights" selected>1박 2일</option>
+							<option value="2days_3nights">2박 3일</option>
+							<option value="3days_4nights">3박 4일</option>
+							<option value="4days_5nights">4박 5일</option>
+							<option value="OverThanThat">그 이상</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="CT">가고싶은 대륙</label></th>
+					<td class="tal">
+						<select name="CT" id="CT">
+							<option value="Asia" selected>아시아</option>
+							<option value="America">아메리카</option>
+							<option value="Europe">유럽</option>
+							<option value="Oceania">오세아니아</option>
+						</select>
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="Wishlist">하고 싶은 것</label></th>
+					<td class="tal">
+						<textarea id="Wishlist" name="content" maxlength="500"></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+			<button class="request-btn" id="request-btn">추천 받기!</button>
+			<div class="resultContainer" id="resultContainer"></div>
+			<div class="resultArea" id="resultArea"></div>
+			<script>
+				var value_purpose = document.getElementById('TP');
+				var value_howlong = document.getElementById('HL');
+				var value_continent = document.getElementById('CT');
+				
+				document.querySelector("#TP").addEventListener("change",(e)=>{
+            		if (e.target.value === "purpose1") {
+                	value_purpose = value_purpose.options[value_purpose.selectedIndex].value;    
+            	}});
+				
+				document.querySelector("#HL").addEventListener("change",(e)=>{
+            		if (e.target.value === "1day_2nights") {
+                	value_howlong = value_howlong.options[value_howlong.selectedIndex].value;    
+            	}});
+				
+				document.querySelector("#CT").addEventListener("change",(e)=>{
+            		if (e.target.value === "Asia") {
+                	value_continent = value_continent.options[value_continent.selectedIndex].value;           
+            	}});
+
+				document.getElementById("request-btn").onclick = function () {
+					if (value_howlong.options[value_howlong.selectedIndex].value === "1day_2nights" && value_continent.options[value_continent.selectedIndex].value === "Europe") {
+						alert("1박 2일의 여정으로 유럽 여행은 무리가 있습니다.");
+					}
+					else if (value_howlong.options[value_howlong.selectedIndex].value === "1day_2nights" && value_continent.options[value_continent.selectedIndex].value === "America") {
+						alert("1박 2일의 여정으로 북미, 남미 여행은 무리가 있습니다.");
+					}
+				}
+				/*
+				function RunAPI() {
+					fetch(url, {
+						method: 'POST', headers: {'Content-Type' : 'application/json'},
+						body:JSON.stringify(data), redirect: 'follow'
+						})
+						.then(Json => Json.json())
+            			.then(Json => {
+               			 console.log(Json)
+                		$resultArea.innerHTML = `<p>${Json.choices[0].message.content}</p>`
+            		})
+				}
+				*/
+				$button.addEventListener("submit", e => {
+  					e.preventDefault();
+
+					const purpose = value_purpose.options[value_purpose.selectedIndex].value;
+					const days = value_howlong.options[value_howlong.selectedIndex].value;
+					const conti = value_continent.options[value_continent.selectedIndex].value;
+					const Wish = document.querySelector('.table textarea');
+
+ 					sendRequest(purpose, days, conti, Wish);
+  					RunAPI();
+					alert("Wait a sec");
+				});
+
+				const sendRequest = (purpose, days, conti, Wish) => {
+  				data.push({
+					role: "user",
+					content: `목적과 일정은 ${purpose}, ${days}이고  가고 싶은 대륙은 ${conti} 거기서 하고 싶은건 ${Wish}이야.`,
+					});
+				};
+				const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/` // ChatGPT API
+
+				const RunAPI = async () => {
+				await fetch(url, {
+					method: "POST",
+					headers: {"Content-Type": "application/json",},
+					body: JSON.stringify(data),
+					redirect: "follow",
+				})
+					.then(res => res.json())
+					.then(res => {
+					printAnswer(res.choices[0].message.content);
+					})
+					.catch(err => {
+					console.log(err);
+					});
+				};
+
+				const console = async result => {
+				let pre = document.createElement("pre");
+				let ai_arr = localStorage.getItem("ai")
+					? JSON.parse(localStorage.getItem("ai"))
+					: [];
+				pre.innerText = result;
+				ai_arr.push(result);
+				localStorage.setItem("ai", JSON.stringify(ai_arr));
+				$loading.style.display = "none";
+				const $existingPre = $resultArea.querySelector("pre");
+				if ($existingPre) {
+					$resultArea.removeChild($existingPre);
+				}
+				$resultArea.appendChild(pre);
+				};
+			</script>
+	</form>
+	</main>
+</body>
