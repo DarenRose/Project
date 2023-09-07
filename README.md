@@ -13,8 +13,3 @@
 
 ![1](https://github.com/DarenRose/RecommendationForVacation/assets/143687305/c44a62d0-9daf-4834-b9dc-2a61967ae083)
 ![2](https://github.com/DarenRose/RecommendationForVacation/assets/143687305/8e4c096f-e400-49fb-bb8d-9aca691e600b)
-
-## 3. 개발하면서 느낀점
-
-  ● 강의에 참여하지 못했던 업보로 프로젝트 개발에 애로사항을 겪었고 그로 인해 구현에 필요한 기능들을
-    직접 하나하나 구글링 해나가며 조금씩 진전이 생김에 있어 보람을 느꼈지만 다음부턴 강의를 놓치면 안 되겠다는 다짐을 하게 되었습니다.
