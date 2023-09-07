@@ -11,11 +11,8 @@
 
 ## 3. UI구성
 
-
-
-
-
-
+![1](https://github.com/DarenRose/RecommendationForVacation/assets/143687305/c44a62d0-9daf-4834-b9dc-2a61967ae083)
+![2](https://github.com/DarenRose/RecommendationForVacation/assets/143687305/8e4c096f-e400-49fb-bb8d-9aca691e600b)
 
 ## 3. 개발하면서 느낀점
 
